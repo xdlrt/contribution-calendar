@@ -28,49 +28,56 @@ function serve() {
 	};
 }
 
-export default {
-	input: 'src/main.js',
-	output: {
-		sourcemap: !production,
-		format: 'iife',
-		name: 'app',
-		file: 'dist/bundle.js'
-	},
-	plugins: [
-		svelte({
-			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production
-			}
-		}),
-		// we'll extract any component CSS out into
-		// a separate file - better for performance
-		css({ output: 'bundle.css' }),
+const getConfig = ({ input, format, file }) => {
+	return {
+		input: `src/${input}.js`,
+		output: {
+			sourcemap: !production,
+			format,
+			name: 'app',
+			file: `dist/${file}.js`
+		},
+		plugins: [
+			svelte({
+				compilerOptions: {
+					// enable run-time checks when not in production
+					dev: !production
+				}
+			}),
+			// we'll extract any component CSS out into
+			// a separate file - better for performance
+			css({ output: `${file}.css` }),
 
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration -
-		// consult the documentation for details:
-		// https://github.com/rollup/plugins/tree/master/packages/commonjs
-		resolve({
-			browser: true,
-			dedupe: ['svelte']
-		}),
-		commonjs(),
+			// If you have external dependencies installed from
+			// npm, you'll most likely need these plugins. In
+			// some cases you'll need additional configuration -
+			// consult the documentation for details:
+			// https://github.com/rollup/plugins/tree/master/packages/commonjs
+			resolve({
+				browser: true,
+				dedupe: ['svelte']
+			}),
+			commonjs(),
 
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
-		!production && serve(),
+			// In dev mode, call `npm run start` once
+			// the bundle has been generated
+			!production && serve(),
 
-		// Watch the `public` directory and refresh the
-		// browser on changes when not in production
-		!production && livereload('public'),
+			// Watch the `public` directory and refresh the
+			// browser on changes when not in production
+			!production && livereload('public'),
 
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		production && terser()
-	],
-	watch: {
-		clearScreen: false
-	}
-};
+			// If we're building for production (npm run build
+			// instead of npm run dev), minify
+			production && terser()
+		],
+		watch: {
+			clearScreen: false
+		}
+	};
+}
+
+export default [
+	getConfig({ input: 'main', format: 'iife', file: 'bundle' }),
+	getConfig({ input: 'embed', format: 'umd', file: 'embed' }),
+]
