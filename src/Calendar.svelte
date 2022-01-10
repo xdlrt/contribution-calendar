@@ -7,21 +7,27 @@
   export let data;
 
   function getDays() {
-    const num = 12 * 7 - 1;
+    const forwardNum = 7;
+    const backwardNum = 11 * 7;
     const days = [];
-    for (let i = 0; i <= num; i++) {
-      if (i === num) {
-        const date = dayjs().add(1, "d").format("YYYY-MM-DD");
-        const heat = data[date] || 0;
-        days.push({ date, heat, today: false });
-        continue;
-      }
+    for (let i = 1; i <= forwardNum; i++) {
+      const date = dayjs()
+        .add(i - 1, "d")
+        .format("YYYY-MM-DD");
+      const heat = data[date] || 0;
+      days.push({
+        date,
+        heat,
+        today: dayjs().add(i - 1, "d").isToday(),
+      });
+    }
+    for (let i = 1; i <= backwardNum; i++) {
       const date = dayjs().subtract(i, "d").format("YYYY-MM-DD");
       const heat = data[date] || 0;
       days.unshift({
         date,
         heat,
-        today: dayjs().subtract(i, "d").isToday(),
+        today: false,
       });
     }
     return days;
