@@ -18,7 +18,8 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "pu": "npm run build && npm publish"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
