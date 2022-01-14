@@ -6,12 +6,12 @@ export function tooltip(element) {
 
   function mouseEnter(event) {
     const desc = element.getAttribute('data-desc');
-
+    const { top, left } = event.target.getBoundingClientRect();
     tooltipComponent = new Tooltip({
       props: {
         desc: desc,
-        x: event.target.offsetLeft + 7,
-        y: event.target.offsetTop - 46,
+        x: left + 7,
+        y: top - 46,
       },
       target: document.body,
     });
