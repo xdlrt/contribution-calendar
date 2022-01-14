@@ -5,6 +5,7 @@
   dayjs.extend(isToday);
 
   export let data;
+  export let getDesc;
 
   function getDays() {
     const forwardNum = 7;
@@ -15,20 +16,24 @@
         .add(i - 1, "d")
         .format("YYYY-MM-DD");
       const heat = data[date] || 0;
-      days.push({
+      const day = {
         date,
         heat,
         today: dayjs().add(i - 1, "d").isToday(),
-      });
+      };
+      day.desc = getDesc(day);
+      days.push();
     }
     for (let i = 1; i <= backwardNum; i++) {
       const date = dayjs().subtract(i, "d").format("YYYY-MM-DD");
       const heat = data[date] || 0;
-      days.unshift({
+      const day = {
         date,
         heat,
         today: false,
-      });
+      };
+      day.desc = getDesc(day);
+      days.unshift(day);
     }
     return days;
   }

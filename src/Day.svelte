@@ -1,6 +1,9 @@
 <script>
+  import Tooltip from "./Tooltip.svelte";
   export let today;
   export let heat;
+  export let desc;
+
   function getClassName() {
     const cls = `day${today ? " today" : ""}`;
     if (heat > 9) return `${cls} dark_green`;
@@ -8,12 +11,27 @@
     else if (heat > 0) return `${cls} light_green`;
     else return `${cls}`;
   }
+
+  let visible = false;
+  function handleMouseEnter() {
+    visible = true;
+  }
+  function handleMouseLeave() {
+    visible = false;
+  }
 </script>
 
-<div class={getClassName()} />
+<div
+  class={getClassName()}
+  on:mouseenter={handleMouseEnter}
+  on:mouseleave={handleMouseLeave}
+>
+  <Tooltip {desc} {visible} />
+</div>
 
 <style>
   .day {
+    position: relative;
     width: 12px;
     height: 12px;
     background: #efefef;
