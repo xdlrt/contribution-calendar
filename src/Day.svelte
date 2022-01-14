@@ -1,5 +1,5 @@
 <script>
-  import Tooltip from "./Tooltip.svelte";
+  import { tooltip } from "./tooltip";
   export let today;
   export let heat;
   export let desc;
@@ -11,23 +11,9 @@
     else if (heat > 0) return `${cls} light_green`;
     else return `${cls}`;
   }
-
-  let visible = false;
-  function handleMouseEnter() {
-    visible = true;
-  }
-  function handleMouseLeave() {
-    visible = false;
-  }
 </script>
 
-<div
-  class={getClassName()}
-  on:mouseenter={handleMouseEnter}
-  on:mouseleave={handleMouseLeave}
->
-  <Tooltip {desc} {visible} />
-</div>
+<div class={getClassName()} data-desc={desc} use:tooltip />
 
 <style>
   .day {

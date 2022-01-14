@@ -1,19 +1,17 @@
 <script>
   import { fade } from "svelte/transition";
   export let desc;
-  export let visible;
+  export let x;
+  export let y;
 </script>
 
-{#if visible}
-  <div class="tooltip" transition:fade>
-    {desc}
-    <div class="arrow" />
-  </div>
-{/if}
+<div class="tooltip" style="top: {y}px; left: {x}px;" transition:fade>
+  {desc}
+  <div class="arrow" />
+</div>
 
 <style>
   .tooltip {
-    display: block;
     position: absolute;
     top: -50px;
     left: 50%;
