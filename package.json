@@ -1,6 +1,6 @@
 {
   "name": "contribution-calendar",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/bundle.js",
   "author": "yeshu",
   "url": "https://yeshu.cloud",
