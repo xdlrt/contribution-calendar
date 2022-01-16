@@ -12,7 +12,7 @@
 
 <style>
   .tooltip {
-    position: absolute;
+    position: fixed;
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
